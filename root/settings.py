@@ -249,3 +249,13 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 
 }
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'express24API',
+    'DESCRIPTION': 'pdp final project',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+    'COMPONENT_SPLIT_REQUEST': True,
+}
