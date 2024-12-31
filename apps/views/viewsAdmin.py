@@ -43,3 +43,9 @@ class OrderProductEditAPIView(RetrieveUpdateAPIView):
     queryset = OrderProduct.objects.all()
     serializer_class = OrderProductModelSerializer
     permission_classes = [IsAuthenticated]
+
+
+
+
+
+
