@@ -1,7 +1,6 @@
-from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from apps.models.products import Category, Product, OrderProduct
+from apps.models.products import Category, Product, Cart, CartItem
 from apps.models.users import User
 
 
@@ -20,9 +19,16 @@ class UserModelSerializer(ModelSerializer):
         model = User
         fields = '__all__'
 
-class OrderProductModelSerializer(ModelSerializer):
+
+class CartModelSerializer(ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = '__all__'
+
+
+class CartItemModelSerializer(ModelSerializer):
     products = ProductModelSerializer(many=True)
 
     class Meta:
-        model = OrderProduct
+        model = CartItem
         fields = '__all__'
