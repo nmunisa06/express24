@@ -3,6 +3,7 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
+from apps.filters import ProductFilter
 from apps.models.products import Product, Category, Cart, CartItem
 from apps.serializers import ProductModelSerializer, CategoryModelSerializer, CartModelSerializer, CartItemModelSerializer
 
@@ -14,7 +15,7 @@ class ProductCreateAPIView(ListCreateAPIView):
     serializer_class = ProductModelSerializer
     permission_classes = [IsAdminUser]
     filter_backends = filters.DjangoFilterBackend
-    filterset_fields = 'category', 'price',
+    filterset_fields = ProductFilter
 
 
 @extend_schema(tags=['products-edit'])
