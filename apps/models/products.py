@@ -29,6 +29,10 @@ class Cart(Model):
         ('cancelled', 'Cancelled'),
     ]
     status = CharField(max_length=255, choices=Status_Choices, default='pending')
+    products = ManyToManyField('apps.Product', through='CartItem')
+    courier = ForeignKey('apps.User', on_delete=CASCADE, blank=True, limit_choices_to={'type':'courier'},
+                         related_name='courier_orders')
+
 
     def __str__(self):
         return f'Order: {self.created_at.strftime("%b %d %I:%M %p")}'
