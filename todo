@@ -1,6 +1,18 @@
 models -- done
 filters -- done
-views order
-elasticsearch
+views order -- done
+elasticsearch -- done
 test.py
-permissions
+permissions -- done
+caching(redis) -- partially done
+
+
+security:
+    -csrf token
+    -uuid
+deployment:
+    -ci/cd
+    -gunicorn/uvicorn
+    -docker conf
+    -nginx
+    -digital ocean

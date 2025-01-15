@@ -1,6 +1,8 @@
+from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
 
+from apps.documentations import ProductElasticSearchDocument
 from apps.models.products import Category, Product, Cart, CartItem
 from apps.models.users import User
 
@@ -47,4 +49,15 @@ class CourierCartSerializer(ModelSerializer):
     class Meta:
         model = Cart
         fields = ['id', 'user_id', 'status', 'products', 'updated_at', 'courier']
+
+
+class ProductElasticSearchDocumentSerializer(DocumentSerializer):
+    class Meta:
+        document = ProductElasticSearchDocument
+
+        fields = (
+            'id',
+            'name',
+            'description',
+        )
 
