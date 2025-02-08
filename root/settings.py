@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django_filters',
     'django_elasticsearch_dsl',
     'django_elasticsearch_dsl_drf',
+
 ]
 
 
@@ -264,4 +265,10 @@ CACHES = {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         },
     }
+}
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': ['localhost:9200'],
+    },
 }
