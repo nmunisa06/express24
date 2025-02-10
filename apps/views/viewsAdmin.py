@@ -1,16 +1,13 @@
-from django_elasticsearch_dsl_drf.filter_backends import SearchFilterBackend, SuggesterFilterBackend
-from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
+
 from django_filters import rest_framework
 from drf_spectacular.utils import extend_schema
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveUpdateAPIView, \
-    CreateAPIView
+from rest_framework.generics import (ListCreateAPIView, RetrieveUpdateDestroyAPIView,
+                                     RetrieveUpdateAPIView, CreateAPIView, ListAPIView)
 from rest_framework.permissions import IsAdminUser
 
-from apps.documentations import ProductElasticSearchDocument
 from apps.filters import ProductFilter
 from apps.models.products import Product, Category, CartItem
-from apps.serializers import (ProductModelSerializer, CategoryModelSerializer,
-                              CartItemModelSerializer, ProductElasticSearchDocumentSerializer)
+from apps.serializers import ProductModelSerializer, CategoryModelSerializer, CartItemModelSerializer
 
 
 @extend_schema(tags=['product-create'])
@@ -18,8 +15,14 @@ class AdminProductCreateAPIView(ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductModelSerializer
     permission_classes = [IsAdminUser]
+
+
+class ProductListAPIView(ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductModelSerializer
     filter_backends = [rest_framework.DjangoFilterBackend]
     filterset_class = ProductFilter
+
 
 
 @extend_schema(tags=['product-edit'])
@@ -52,19 +55,6 @@ class AdminCartItemEditAPIView(RetrieveUpdateAPIView):
     queryset = CartItem.objects.all()
     serializer_class = CartItemModelSerializer
     permission_classes = [IsAdminUser]
-
-
-class ProductDocumentViewSet(DocumentViewSet):
-    document = ProductElasticSearchDocument
-    serializer_class = ProductElasticSearchDocumentSerializer
-
-    filter_backends = [
-        SearchFilterBackend,
-        SuggesterFilterBackend
-    ]
-
-    search_fields=('name', 'description', 'category')
-
 
 
 

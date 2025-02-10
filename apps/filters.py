@@ -5,7 +5,7 @@ from apps.models import Product
 
 
 class ProductFilter(FilterSet):
-    name = CharFilter(lookup_expr='iexact')
+    name = CharFilter(field_name='name', lookup_expr='iexact')
 
     price = NumberFilter()
     min_price = NumberFilter(name="price", lookup_expr='gte')
