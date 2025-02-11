@@ -12,8 +12,8 @@ class Product(Model):
     name = CharField(max_length=255)
     price = FloatField()
     description = TextField(max_length=500)
-    image = ImageField(upload_to='productImage/', blank=True)
-    category = ForeignKey('apps.Category', on_delete=CASCADE, blank=True)
+    image = ImageField(upload_to='productImage/', blank=True, null=True)
+    category = ForeignKey('apps.Category', on_delete=CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name

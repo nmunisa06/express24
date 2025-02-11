@@ -1,9 +1,12 @@
 
 from django_filters import rest_framework
 from drf_spectacular.utils import extend_schema
+from rest_framework import status
 from rest_framework.generics import (ListCreateAPIView, RetrieveUpdateDestroyAPIView,
                                      RetrieveUpdateAPIView, CreateAPIView, ListAPIView)
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAdminUser
+from rest_framework.response import Response
 
 from apps.filters import ProductFilter
 from apps.models.products import Product, Category, CartItem
@@ -15,6 +18,15 @@ class AdminProductCreateAPIView(ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductModelSerializer
     permission_classes = [IsAdminUser]
+    parser_classes = [MultiPartParser, FormParser]
+
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProductListAPIView(ListAPIView):
