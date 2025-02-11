@@ -5,8 +5,9 @@ from rest_framework import status
 from rest_framework.generics import (ListCreateAPIView, RetrieveUpdateDestroyAPIView,
                                      RetrieveUpdateAPIView, CreateAPIView, ListAPIView)
 from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from apps.filters import ProductFilter
 from apps.models.products import Product, Category, CartItem
@@ -67,6 +68,14 @@ class AdminCartItemEditAPIView(RetrieveUpdateAPIView):
     queryset = CartItem.objects.all()
     serializer_class = CartItemModelSerializer
     permission_classes = [IsAdminUser]
+
+
+class ProtectedView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response({"message": "You have access!"})
+
 
 
 
